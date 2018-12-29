@@ -1,13 +1,11 @@
-var Logger = require('./Logger');
+var Person = require('./Person')
 
-var logger = new Logger();
-
-class Shopper {
+class Shopper extends Person {
 
     constructor(name, money=0) {
-        this.name = name;
+        super(name);
         this.money = money;
-        logger.log(`New Shopper: ${name} has ${money} in their account.`);
+        this.employed = false;
     }
 
 }

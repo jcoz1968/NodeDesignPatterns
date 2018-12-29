@@ -1,26 +1,27 @@
-var Logger = require('./Logger');
-var Shopper = require('./Shopper');
-var Store = require('./Store');
+var PersonBuilder = require('./PersonBuilder');
 
-var logger = new Logger();
+// Employees
+var sue = new PersonBuilder('Sue').makeEmployee().makeManager(60).build();
+var bill = new PersonBuilder('Bill').makeEmployee().makePartTime().build();
+var phil = new PersonBuilder('Phil').makeEmployee().build();
 
-logger.log('starting app...');
+// var sue = new Person('Sue', true, true, 60);
+// var bill = new Person('Bill', true, false, 20);
+// var phil = new Person('Phil', true, false);
 
-var alex = new Shopper('alex', 500)
-var ski_shop = new Store('Steep and Deep Supplies', [
-    {
-        item: 'Downhill Skis',
-        qty: 5,
-        price: 750
-    },
-    {
-        item: 'Knit Hat',
-        qty: 20,
-        price: 5
-    }
-])
+// Shoppers
+var charles = new PersonBuilder('Charles')
+    .withMoney(500)
+    .withList(['jeans', 'sunglasses'])
+    .build();
 
-logger.log('finished config...');
+var tabbitha = new PersonBuilder('Tabbitha').withMoney(1000).build();
 
-console.log(`${logger.count} logs total`);
-logger.logs.map(log => console.log(`   ${log.message}`));
+// var charles = new Person('Charles', false, false, 0, 500, ['jeans', 'sunglasses']);
+// var tabbitha = new Person('Tabbitha', false, false, 0, 1000);
+
+console.log(charles.toString());
+console.log(tabbitha.toString());
+console.log(bill.toString());
+console.log(phil.toString());
+console.log(sue.toString());

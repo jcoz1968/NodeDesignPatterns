@@ -1,27 +1,15 @@
-var PersonBuilder = require('./PersonBuilder');
+console.log( "localStorage length: ", localStorage.length );
 
-// Employees
-var sue = new PersonBuilder('Sue').makeEmployee().makeManager(60).build();
-var bill = new PersonBuilder('Bill').makeEmployee().makePartTime().build();
-var phil = new PersonBuilder('Phil').makeEmployee().build();
+var uid = localStorage.getItem("user_id");
 
-// var sue = new Person('Sue', true, true, 60);
-// var bill = new Person('Bill', true, false, 20);
-// var phil = new Person('Phil', true, false);
+console.log( "user_id: ", uid );
 
-// Shoppers
-var charles = new PersonBuilder('Charles')
-    .withMoney(500)
-    .withList(['jeans', 'sunglasses'])
-    .build();
-
-var tabbitha = new PersonBuilder('Tabbitha').withMoney(1000).build();
-
-// var charles = new Person('Charles', false, false, 0, 500, ['jeans', 'sunglasses']);
-// var tabbitha = new Person('Tabbitha', false, false, 0, 1000);
-
-console.log(charles.toString());
-console.log(tabbitha.toString());
-console.log(bill.toString());
-console.log(phil.toString());
-console.log(sue.toString());
+if (!uid) {
+    console.log('User ID not found. Setting the user id and token...');
+    localStorage.setItem("token", "TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ");
+    localStorage.setItem("user_id", "12345");
+} else {
+    console.log('User ID found.', uid);
+    console.log('clearning the User ID...');
+    localStorage.clear();
+}

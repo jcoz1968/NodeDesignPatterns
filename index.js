@@ -1,24 +1,16 @@
-var FS_Proxy = require('./FS_Proxy');
-var fs = new FS_Proxy(require('fs'));
-var path = require('path');
+var CatalogGroup = require('./CatalogGroup');
+var CatalogItem = require('./CatalogItem');
 
+var boots = new CatalogItem("Leather Boots", 79.99);
+var sneakers = new CatalogItem("Kicks", 39.99);
+var flipFlops = new CatalogItem("California work boots", 19.99);
 
+var group_shoes = new CatalogGroup('Shoes and Such', [boots, sneakers, flipFlops]);
 
-var txtFile = path.join(__dirname, 'Readme.txt');
-var mdFile = path.join(__dirname, 'Readme.md');
+console.log('boots total: ', `$${boots.total}`);
+console.log( 'shoes total: ', `$${group_shoes.total}` );
 
-var result = (error, contents) => {
+boots.print();
+sneakers.print();
 
-    if (error) {
-        console.log('\x07');
-        console.error(error);
-        process.exit(0);
-    }
-
-    console.log('reading file...');
-    console.log(contents);
-
-}
-
-// fs.readFile(txtFile, 'UTF-8', result);
-fs.readFile(mdFile, 'UTF-8', result);
+group_shoes.print();

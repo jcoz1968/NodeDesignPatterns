@@ -1,17 +1,21 @@
-var localStorage = require('./localStorage');
+var fs = require('fs');
+var path = require('path');
 
-console.log("localStorage length: ", localStorage.length);
+var txtFile = path.join(__dirname, 'Readme.txt');
+var mdFile = path.join(__dirname, 'Readme.md');
 
-var uid = localStorage.getItem("user_id");
+var result = (error, contents) => {
 
-console.log( "user_id: ", uid );
+    if (error) {
+        console.log('\x07');
+        console.error(error);
+        process.exit(0);
+    }
 
-if (!uid) {
-    console.log('User ID not found. Setting the user id and token...');
-    localStorage.setItem("token", "TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ");
-    localStorage.setItem("user_id", "12345");
-} else {
-    console.log('User ID found.', uid);
-    console.log('clearning the User ID...');
-    localStorage.clear();
+    console.log('reading file...');
+    console.log(contents);
+
 }
+
+fs.readFile(txtFile, 'UTF-8', result);
+fs.readFile(mdFile, 'UTF-8', result);

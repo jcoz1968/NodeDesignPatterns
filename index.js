@@ -1,9 +1,36 @@
-var Store = require('./Store');
-var inventory = require('./inventory');
+var conductor = require('./conductor');
 
-var skiShop = new Store('Steep and Deep', inventory);
+var { ExitCommand, CreateCommand } = require('./commands');
 
-var searchItem = 'powder skis';
-var results = skiShop.find(searchItem);
+var { createInterface } = require('readline');
+var rl = createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-console.log( results );
+console.log('create <fileName> <text> | exit');
+rl.prompt();
+
+rl.on('line', input => {
+
+    var [ commandText, ...remaining ] = input.split(' ')
+    var [ fileName, ...fileText ] = remaining
+    var text = fileText.join(' ')
+
+    switch(commandText) {
+        case "exit":
+            conductor.run(new ExitCommand());            
+            break;
+
+        case "create" :
+            conductor.run(new CreateCommand(fileName, contents));
+            console.log('file contents:', text);
+            break;
+
+        default :
+            console.log(`${commandText} command not found!`);
+    }
+
+    rl.prompt();
+
+});

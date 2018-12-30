@@ -1,8 +1,10 @@
-var storage = require('./Storage');
+var Storage = require('./Storage');
+
 class Store {
 
     constructor(name, inventory=[]) {
         this.name = name;
+
         var floor = new Storage('store floor', inventory.floor);
         var backroom = new Storage('store backroom', inventory.backroom);
         var localStore = new Storage('nearby store', inventory.localStore, 1);
@@ -13,6 +15,7 @@ class Store {
         localStore.setNext(warehouse);
 
         this.storage = floor;
+
     }
 
     find(itemName) {

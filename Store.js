@@ -1,11 +1,22 @@
-var logger = require('./Logger');
-
+var storage = require('./Storage');
 class Store {
 
     constructor(name, inventory=[]) {
         this.name = name;
-        this.inventory = inventory;
-        logger.log(`New Store: ${name} has ${inventory.length} items in stock.`);
+        var floor = new Storage('store floor', inventory.floor);
+        var backroom = new Storage('store backroom', inventory.backroom);
+        var localStore = new Storage('nearby store', inventory.localStore, 1);
+        var warehouse = new Storage('warehouse', inventory.warehouse, 5);
+
+        floor.setNext(backroom);
+        backroom.setNext(localStore);
+        localStore.setNext(warehouse);
+
+        this.storage = floor;
+    }
+
+    find(itemName) {
+        return this.storage.find(itemName);
     }
 
 }

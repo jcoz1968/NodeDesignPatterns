@@ -1,11 +1,16 @@
-var logger = require('./Logger');
-
 class Store {
 
-    constructor(name, inventory=[]) {
+    constructor(name) {
         this.name = name;
-        this.inventory = inventory;
-        logger.log(`New Store: ${name} has ${inventory.length} items in stock.`);
+        this.subscribers = [];
+    }
+
+    subscribe(observer) {
+        this.subscribers.push(observer);
+    }
+
+    sale(discount) {
+        this.subscribers.forEach(observer => observer.notify(this.name, discount));
     }
 
 }

@@ -1,29 +1,12 @@
 class Shopper {
 
-    constructor(name, account=0) {
+    constructor(name) {
         this.name = name;
-        this.account = account;
-        this.items = [];
     }
 
-    purchase(item) {
-        if (item.price > this.account) {
-            console.log(`Cannot afford ${item.name}`);
-        } else {
-            console.log(`Purchasing item ${item.name}`);
-            this.account -= item.price;
-            this.items.push(item);
-        }
+    notify(storeName, discount) {
+        console.log(`${this.name}, there is a sale at ${storeName}! ${discount}% off everything!`);
     }
-
-    printStatus() {
-        console.log(`${this.name} has purchased ${this.items.length} items:`);
-        this.items.forEach(item => {
-            console.log(`   * ${item.name} - ${item.price}`);
-        })
-        console.log(`${this.name} has $${this.account.toFixed(2)} remaining.`);
-    }
-
 }
 
 module.exports = Shopper;

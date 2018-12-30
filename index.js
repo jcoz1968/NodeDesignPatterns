@@ -1,23 +1,26 @@
+var Store = require('./Store');
 var Shopper = require('./Shopper');
-var {
-  InventoryItem,
-  GoldenInventoryItem,
-  DiamondInventoryItem
-} = require('./InventoryItem');
+var Mall = require('./Mall');
 
-var alex = new Shopper('Alex', 4000);
+var catsAndThings = new Store("Cats & Things");
+var insAndOuts = new Store("Ins and Outs");
 
-var walkman = new InventoryItem("Walkman", 29.99);
-var necklace = new InventoryItem("Necklace", 9.99);
+var alex = new Shopper("Alex");
+var eve = new Shopper("Eve");
+var sharon = new Shopper("Sharon");
+var mike = new Shopper("Mike");
 
-var gold_necklace = new GoldenInventoryItem(necklace);
-var diamond_gold_necklace = new DiamondInventoryItem(gold_necklace);
+var valleyMall = new Mall();
 
-var diamond_walkman = new DiamondInventoryItem(walkman);
+catsAndThings.subscribe(alex);
+catsAndThings.subscribe(eve);
+catsAndThings.subscribe(mike);
+catsAndThings.subscribe(valleyMall);
 
-alex.purchase(diamond_gold_necklace);
-alex.purchase(diamond_walkman);
+insAndOuts.subscribe(sharon);
+insAndOuts.subscribe(valleyMall);
 
-alex.printStatus();
+catsAndThings.sale(20);
+insAndOuts.sale(50);
 
-diamond_walkman.print();
+console.log( valleyMall.sales );

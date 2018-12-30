@@ -1,47 +1,49 @@
-var conductor = require('./conductor');
-var { ExitCommand, CreateCommand } = require('./commands');
+var InventoryItem = require('./InventoryItem');
+var Iterator = require('./Iterator');
 
-var { createInterface }  = require('readline');
-var rl = createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+require('readline').emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
 
-console.log('create <fileName> <text> | history | undo | redo | exit');
-rl.prompt();
+console.log('Press any direction key...');
 
-rl.on('line', input => {
+var inventory = new Iterator([
+    new InventoryItem("Poles", 9.99),
+    new InventoryItem("Skis", 799.99),
+    new InventoryItem("Boots", 799.99),
+    new InventoryItem("Burgers", 5.99),
+    new InventoryItem("Fries", 2.99),
+    new InventoryItem("Shake", 4.99),
+    new InventoryItem("Jeans", 59.99),
+    new InventoryItem("Shoes", 39.99)
+]);
 
-    var [ commandText, ...remaining ] = input.split(' ')
-    var [ fileName, ...fileText ] = remaining
-    var text = fileText.join(' ')
+process.stdin.on('keypress', (str, key) => {
 
-    switch(commandText) {
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
 
-        case "history":
-            conductor.printHistory();
+    switch(key.name) {
+
+        case 'right' :
+            inventory.next().writeLn();
             break;
 
-        case "undo":
-            conductor.undo();
+        case 'left' :
+            inventory.prev().writeLn();
             break;
 
-        case "redo":
-            conductor.redo();
+        case 'down' :
+            inventory.last().writeLn();
             break;
 
-        case "exit":
-            conductor.run(new ExitCommand());
+        case 'up' :
+            inventory.first().writeLn();
             break;
 
-        case "create" :
-            conductor.run(new CreateCommand(fileName, text));
-            break;
-
-        default :
-            console.log(`${commandText} command not found!`);
+        case 'c' :
+            if (key.ctrl) {
+                process.exit()
+            }
     }
-
-    rl.prompt();
 
 });
